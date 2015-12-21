@@ -2,7 +2,7 @@ import Image;
 import png;
 import struct;
 
-filename = "newpng.txt"                         #output filename
+filename = "newpng.xyzb"                        #output filename
 picname = "Yoshi.png"                           #picture filename
 image = Image.open(picname)                     #open the image
 pixInfo = image.load()                          #loads pixel data into pixInfo
