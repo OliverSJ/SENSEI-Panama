@@ -9,8 +9,8 @@ pixInfo = image.load()                          #loads pixel data into pixInfo
 (i,_) = image.size                              #gives x-size
 (_,j) = image.size                              #gives y-size
 f = open(filename, 'wb')
-for x in range(i-1,0,-1):                       #iterate through all pixels in reverse
-    for y in range(j-1,0,-1):
+for x in range(i-1,-1,-1):                       #iterate through all pixels in reverse
+    for y in range(j-1,-1,-1):
         z = 0                                   #z will remain 0 for now
                                                 #later we will get it from
                                                 #terrain map
