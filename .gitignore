@@ -1,3 +1,6 @@
+#Ignore the giant png file
+50Island.png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
