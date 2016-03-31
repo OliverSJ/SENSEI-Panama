@@ -52,11 +52,9 @@ i = csv_f.next()
 rest = [row for row in csv_f]
 
 for i in rest:
-	count =0
-	#Grab each row
-	for j in rest:
-		testLeftEasting = float(j[2])
-		testLeftNorthing = float(j[3])
+	if(i[2] and i[3]):
+		testLeftEasting = float(i[2])
+		testLeftNorthing = float(i[3])
 		sphere = SphereShape.create(0.36, 3)
 
 		#Calculate the distance
