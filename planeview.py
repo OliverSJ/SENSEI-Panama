@@ -1,22 +1,40 @@
-#Authors: James Hwang, Oliver San Juan, and Ishta Bhagat 
+#Authors: James Hwang, Oliver San Juan, and Ishta Bhagat
 
 """
-
+	The information for the
 	A: 0.1800000000
 	D: 0.0000000000
 	B: 0.0000000000
 	E: -0.1800000000
-	C: 624030.0137255481 <--upper left easting
-	F; 1015207.0834458455 <--- upper left northing
+	C: 624030.0137255481 	<--upper left easting
+	F; 1015207.0834458455 	<--- upper left northing
 
 
 	627407.233983497,1012918.6367208124
+
+
+	To find the ratio:
+		d/totald * 100
+
+
+	We need to know the bottom right hand corner in terms of UTM
+
+	Dimensions of the picture:
+		32064 x 30780
+
+	-Is it -0.18 or +0.18?
 
 """
 
 from omega import *
 from cyclops import *
-import utm
+
+#Constants
+upperLeftEasting = 624030.0137255481		#Provided by jgw file
+upperLeftNorthing = 1015207.0834458455		#Provided by jgw file
+resWidth = 32064
+resHeight = 30780
+pixelSize = 0.18
 
 #Create plane with specified width and height
 plane = PlaneShape.create(100, 100)
@@ -26,6 +44,31 @@ plane.setPosition(Vector3(0, 0, -3))
 
 plane.setEffect("textured -v emissive -d 50Island.png")
 
+#Calculate the bottom right UTM coordinates for our file
+lowerRightEasting = (pixelSize * resWidth) + upperLeftEasting
+lowerRightNorthing = (pixelSize * resHeight) + upperLeftEasting
+
+#Calculate the total distances
+totalDistanceX = lowerRightEasting - upperLeftEasting
+totalDistanceY = lowerRightNorthing - upperLeftNorthing
+
+#testing
+testLeftEasting = 627407.233983497
+testLeftNorthing = 1012918.6367208124
+
+sphere = SphereShape.create(0.36, 3)
+
+#Calculate the distance
+distanceX = upperLeftEasting - testLeftEasting
+distanceY = upperLeftNorthing- testLeftNorthing
+
+#Convert the distance into a ratio to be graphed
+adjustedX = (distanceX/totalDistanceX) * 100
+adjustedY = (distanceY/totalDistanceY) * 100
+
+sphere.setPosition(Vector3(adjustedX, adjustedY, 0))
+sphere.setEffect("colored -d red")
+
 
 #Example code to color the monkeys' positions
 # for i in range(0, 100):
@@ -33,41 +76,9 @@ plane.setEffect("textured -v emissive -d 50Island.png")
 # sphere.setPosition(Vector3(-1, 1.8, -2)) #x, y, z
 # sphere.setEffect("colored -d red")
 
-
-#Calculate the origin UTM to lat/long
-
-#Convert the origin points to latitude and longitude
-latlon = utm.to_latlon(624030.0137255481, 1015207.0834458455, 17, 'P')
-latOrigin = latlon[0]
-lonOrigin = latlon[1]
-
-
-#First datapoint 
-datapoint = utm.to_latlon(627427.8989302963,1013560.8472266255, 17, 'P')
-latOne = datapoint[0]
-lonOne = datapoint[1]
-
-#Print it out
-sphere = SphereShape.create(0.36, 3) #radius
-sphere.setPosition(Vector3(lonOne-lonOrigin, latOne-latOrigin, 0)) #x, y, z
-sphere.setEffect("colored -d red")
-
-print latOne
-print lonOne
-print (lonOne-lonOrigin)
-print (latOne-latOrigin)
-
-
-
 #print latlon
 
 #Use this as an example for seeing where the sphere will show up
 # sphere = SphereShape.create(0.5, 3)
 # sphere.setPosition(Vector3(-1, 1.8, -4))
 # sphere.setEffect("colored -d blue")
-
-
-
-
-
-
