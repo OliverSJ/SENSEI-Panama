@@ -55,7 +55,7 @@ lowerCornerSphere.setPosition(100,-100,-3)
 
 print "---map loaded..."
 
-plane.setEffect("textured -d 50Island.png -v emissive")
+#plane.setEffect("textured -d 10Island.png -v emissive")
 
 #Calculate the bottom right UTM coordinates for our file
 lowerRightEasting = (pixelSize * resWidth) + upperLeftEasting
@@ -75,13 +75,13 @@ csv_f = csv.reader(f)
 i = csv_f.next()
 rest = [row for row in csv_f]
 
-fixedZ = -2
+fixedZ = -2.5
 
 for i in rest:
 	if(i[2] and i[3]):
 		testLeftEasting = float(i[2])
 		testLeftNorthing = float(i[3])
-		sphere = SphereShape.create(1.0, 3)
+		sphere = SphereShape.create(.5, 3)
 
 		#Calculate the distance
 		distanceX = testLeftEasting - upperLeftEasting
