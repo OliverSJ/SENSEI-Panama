@@ -36,6 +36,10 @@ eastingColumn = 30
 northingColumn = 31
 heightColumn = 23
 
+#Values used to keep track of each iteration's values
+# The program needs to keep track of the previous values because it won't know
+# whether or not it should store the values to the CSV file until it's reached a different time burst.  
+
 prevMin = -1
 currMin = -1        #currMin will always store the minute value of every valid iteration
 prevUtmE = -1
@@ -61,13 +65,15 @@ for i in rest:
 	#Parse lines that only have complete data
 	if(i[eastingColumn] and i[northingColumn] and i[heightColumn]):
             
-            string = i[34].split()
-            string = string[1].split(":")
+
+            timeStamp = i[34].split()
+            time= timeStamp[1].split(":")
 
             #Get the current iteration's minute
-            currMin = int(string[1])
+            currMin = int(time[1])
 
             if(prevMin < 1):
+
                 #assign prevMin to currMin because this is the first iteration
                 prevMin = currMin
 
@@ -83,7 +89,7 @@ for i in rest:
                 prevMin = currMin
             
 
-
+            #Store the current iteration's values in preparation for the next iteration
             prevUtmE = i[eastingColumn]
             prevUtmN = i[northingColumn]
             prevHeight = i[heightColumn]
